@@ -1,0 +1,14 @@
+<ion-view view-title="About Author">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <div class="content has-header">
+            <div class="list animate-fade-slide-in-right">
+                <div class="item item-icon-right">
+                    <img src="http://kayass.com/wp-content/uploads/2016/10/cropped-IMG_0275.jpg" height="100px">
+                    <h2>{{author.name}}</h2>
+                </div>
+                <p class="content padding double-padding-x" style="text-align: justify;" ng-bind-html="author.intro"></p>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>
+

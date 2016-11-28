@@ -1,0 +1,19 @@
+<ion-view view-title="Categories">
+    <ion-content ng-class="{expanded:isExpanded}" >
+        <div class="item card-item" ng-repeat="cat in categories | orderBy: '-id'">
+            <div ui-sref="app.gallery({catID: '{{cat.id}}'})" class="card stable-bg ink ink-dark">
+                <div class="item  item-text-wrap"><!-- item-avatar -->
+                    <!-- <span class="avatar" style="background-image: url('img/jon-snow.jpg');"></span> -->
+                    <strong>{{cat.title}}</strong>
+                    <div class="card-footer text-right">
+                        <!-- <i class="icon ion-chatbubbles positive"></i> 6
+                        <i class="icon ion-heart assertive"></i> 23 -->
+                        <div class="pull-left">
+                            <!-- <i class="icon ion-clock"></i> just now -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

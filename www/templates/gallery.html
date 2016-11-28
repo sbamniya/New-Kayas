@@ -1,0 +1,28 @@
+<ion-view view-title="Posts">
+    <ion-content ng-class="{expanded:isExpanded}">
+        <div class="list">
+            <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.id}}', catID: '{{catID}}'})" class="card card-gallery item item-text-wrap"  >
+                <div class="ink dark-bg">
+                    <h2 ng-bind-html="post.title"></h2>
+                    <h2 style="padding-top: 0 ">By : {{post.author.name}}</h2>
+                    <img class="full-image" ng-src="{{post.attachments[0].url}}">
+                </div>
+                <div class="content padding double-padding-x">
+                    <p ng-bind-html="post.excerpt"></p>
+                </div>
+                <div class="item tabs tabs-secondary tabs-icon-left">
+                    <a class="tab-item stable-bg assertive">
+                        <i class="icon ion-heart"></i>
+                        4
+                    </a>
+                    <a class="tab-item stable-bg positive-900">
+                        <i class="icon ion-chatbubbles"></i>
+                        {{post.comment_count}}
+                    </a>
+                </div>
+                
+            </div>
+            <br>
+        </div>
+    </ion-content>
+</ion-view>

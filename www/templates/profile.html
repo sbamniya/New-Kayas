@@ -1,0 +1,28 @@
+<ion-view view-title="Read Full Story">
+    <ion-content ng-class="{expanded:$scope.isExpanded}">
+        <div class="hero slide-up" style="background-image: url('{{post.attachments[0].url}}');">
+            <div class="content">
+                <div class="avatar" style="background-image: url('http://kayass.com/wp-content/uploads/2016/10/cropped-IMG_0275.jpg');"></div>
+                <h3><a class="dark">{{post.author.name}}</a></h3>
+                <h4></h4>
+            </div>
+        </div>
+        <div class="tabs tabs-dark tabs-icon-top static">
+            <a href="javascript:void(0)" class="tab-item">
+                <i class="icon ion-chatbubbles"></i> {{post.comment_count}}
+            </a>
+            <a href="javascript:void(0)" class="tab-item">
+                <i class="icon ion-heart"></i> 10
+            </a>
+        </div>
+        <h4 class="content padding double-padding-x" ng-bind-html="post.title"></h4>
+        <h4 class="content padding double-padding-x">Published On: {{post.date}}</h4>
+        <p class="content padding double-padding-x" style="text-align: justify;" ng-bind-html="post.content"></p>
+        <h4 class="content padding double-padding-x">Comments</h4>
+        <a ui-sref="javascr" class="item item-avatar item-icon-right" ng-repeat="comments in post.comments | orderBy: '-id'">
+            <img src="http://0.gravatar.com/avatar/0175cc56a07f848714ea7508bb4a06d4?s=48&d=mm&r=g">
+            <h2>{{comments.name}}</h2>
+            <p ng-bind-html="comments.content"></p>
+        </a>
+    </ion-content>
+</ion-view>
