@@ -120,14 +120,7 @@ angular.module('starter.controllers', [])
     $scope.isExpanded = false;
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab('right');
-
-    $timeout(function() {
-        ionicMaterialMotion.fadeSlideIn({
-            selector: '.item'
-        });
-    }, 200);
-
-
+    $scope.loading = true;
     // Activate ink for controller
     
     $scope.categories = [];
@@ -135,6 +128,14 @@ angular.module('starter.controllers', [])
         // console.log(response.categories);
         if (response.status=='ok') {
             $scope.categories = response.categories;
+              $timeout(function() {
+                ionicMaterialMotion.fadeSlideIn({
+                    selector: '.item'
+                });
+                $scope.loading = false;
+            }, 200);
+
+
         }else{
             alert('Error');
         }
@@ -149,7 +150,7 @@ angular.module('starter.controllers', [])
     $scope.isExpanded = false;
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
-
+    $scope.loading = true;
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
@@ -157,11 +158,6 @@ angular.module('starter.controllers', [])
         });
     }, 300);
 
-   /* $timeout(function() {
-        ionicMaterialMotion.fadeSlideInRight({
-            startVelocity: 3000
-        });
-    }, 700);*/
     var postId = $stateParams.postId;
     var catID = $stateParams.catID;
     $http.get('http://kayass.com/?json=core.get_category_posts&id='+catID).success(function(response){
@@ -172,7 +168,8 @@ angular.module('starter.controllers', [])
                     $scope.post = value;
                 }
             });
-            console.log($scope.post);
+            $scope.loading = false;
+            //console.log($scope.post);
         }else{
             alert('Error');
         }
@@ -187,19 +184,11 @@ angular.module('starter.controllers', [])
     $scope.isExpanded = false;
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
-    ionicMaterialMotion.fadeSlideInRight({
-        selector: '.item'
-    });
+    $scope.loading = true;
+    $scope.noPost = false;
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 
-    /*ionicMaterialMotion.pushDown({
-        selector: '.push-down'
-    });
-    ionicMaterialMotion.fadeSlideInRight({
-        selector: '.item'
-    });*/
-    
     var id = $stateParams.catID;
     $scope.catID = id;
     $http.get('http://kayass.com/?json=core.get_category_posts&id='+id).success(function(response){
@@ -213,6 +202,15 @@ angular.module('starter.controllers', [])
                 log.push(item);
             });
             $scope.posts = log;
+            $timeout(function() {
+                ionicMaterialMotion.fadeSlideInRight({
+                    selector: '.item'
+                });
+                $scope.loading = false;
+            }, 0);
+            if ($scope.posts.length==0) {
+                $scope.noPost = true;
+            }
         }else{
             alert('Error');
         }
@@ -225,7 +223,7 @@ angular.module('starter.controllers', [])
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.$parent.setHeaderFab('left');
-
+    $scope.loading = true;
     // Set Motion
     ionicMaterialMotion.fadeSlideInRight();
 
@@ -236,6 +234,7 @@ angular.module('starter.controllers', [])
         name : 'Kalika Prasad',
         intro: '"A simple thought can change your entire life & observartion brings wisdom." To understand things one needs it to be well explained & our author & Friend Kalika took an Initiative by his awesome Writing skills & Presence of mind.<br>Stay tuned for more kayass along with our friend - "Kalika Prasad".'
     }
+    $scope.loading = false;
 })
 
 ;

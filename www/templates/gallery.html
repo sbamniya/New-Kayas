@@ -1,5 +1,6 @@
 <ion-view view-title="Posts">
-    <ion-content ng-class="{expanded:isExpanded}">
+    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
+        <div class="alert alert-danger" ng-show="noPost">No Post Availible for Selected Category</div>
         <div class="list">
             <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.id}}', catID: '{{catID}}'})" class="card card-gallery item item-text-wrap"  >
                 <div class="ink dark-bg">
@@ -24,5 +25,6 @@
             </div>
             <br>
         </div>
+        <ion-spinner icon="android" ng-show="loading"></ion-spinner>
     </ion-content>
 </ion-view>

@@ -1,5 +1,6 @@
 <ion-view view-title="Categories">
-    <ion-content ng-class="{expanded:isExpanded}" >
+
+    <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
         <div class="item card-item" ng-repeat="cat in categories | orderBy: '-id'">
             <div ui-sref="app.gallery({catID: '{{cat.id}}'})" class="card stable-bg ink ink-dark">
                 <div class="item item-avatar item-text-wrap">
@@ -11,9 +12,12 @@
                         <div class="pull-left">
                             <i class="icon ion-clock"></i> just now
                         </div>
+
                     </div>
                 </div>
             </div>
+
         </div>
+        <ion-spinner icon="android" ng-show="loading"></ion-spinner>
     </ion-content>
 </ion-view>
