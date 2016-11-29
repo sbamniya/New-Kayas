@@ -127,10 +127,12 @@ angular.module('starter.controllers', [])
         });
     }, 200);
 
+
     // Activate ink for controller
     
     $scope.categories = [];
     $http.get('http://deltabee.com/kayas/?json=core.get_category_index').success(function(response){
+        // console.log(response.categories);
         if (response.status=='ok') {
             $scope.categories = response.categories;
         }else{
@@ -185,24 +187,32 @@ angular.module('starter.controllers', [])
     $scope.isExpanded = false;
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
-
+    ionicMaterialMotion.fadeSlideInRight({
+        selector: '.item'
+    });
     // Activate ink for controller
     ionicMaterialInk.displayEffect();
 
-    ionicMaterialMotion.pushDown({
+    /*ionicMaterialMotion.pushDown({
         selector: '.push-down'
     });
     ionicMaterialMotion.fadeSlideInRight({
         selector: '.item'
-    });
+    });*/
     
     var id = $stateParams.catID;
     $scope.catID = id;
     $http.get('http://kayass.com/?json=core.get_category_posts&id='+id).success(function(response){
         if (response.status=='ok') {
-            $scope.posts = response.posts;
+            var log = [];
+            var res = response.posts;
             $scope.cat = response.category;
-            //console.log($scope.posts);
+            angular.forEach(res, function(item, key){
+                var date = new Date(item.date);
+                item.date = date.getTime();
+                log.push(item);
+            });
+            $scope.posts = log;
         }else{
             alert('Error');
         }
