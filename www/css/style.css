@@ -99,3 +99,15 @@ ion-spinner.spinner.spinner-android svg {
 .alert-danger{
     background-color:rgba(210, 34, 34, 0.74); 
 }
+.red-bg {
+    background-color: #a04b4b !important;
+}
+.list .card.card-gallery{
+    margin: 0 0 0 0px !important;
+}
+.list .card.card-gallery.item h2 {
+    color: #fff;
+}
+.padding{
+    padding: 5px!important;
+}

@@ -125,7 +125,7 @@ angular.module('starter.controllers', [])
     
     $scope.categories = [];
     $http.get('http://deltabee.com/kayas/?json=core.get_category_index').success(function(response){
-        // console.log(response.categories);
+        // / console.log(response.categories);
         if (response.status=='ok') {
             $scope.categories = response.categories;
               $timeout(function() {
@@ -151,6 +151,7 @@ angular.module('starter.controllers', [])
     $scope.$parent.setExpanded(false);
     $scope.$parent.setHeaderFab(false);
     $scope.loading = true;
+    $scope.noPost = false;
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
@@ -166,6 +167,10 @@ angular.module('starter.controllers', [])
             angular.forEach($scope.posts, function(value, key){
                 if (value.id==postId) {
                     $scope.post = value;
+                    $scope.post.date = new Date(value.date);
+                    if (value.comment_count==0) {
+                        $scope.noPost = true;
+                    }
                 }
             });
             $scope.loading = false;

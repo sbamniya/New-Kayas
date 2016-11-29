@@ -4,13 +4,13 @@
         <div class="item card-item" ng-repeat="cat in categories | orderBy: '-id'">
             <div ui-sref="app.gallery({catID: '{{cat.id}}'})" class="card stable-bg ink ink-dark">
                 <div class="item item-avatar item-text-wrap">
-                    <span class="avatar" style="background-image: url('img/jon-snow.jpg');"></span>
+                    <span class="avatar" style="background-image: url('http://kayass.com/wp-content/uploads/2016/10/cropped-IMG_0275.jpg');"></span>
                     <strong>{{cat.title}}</strong>
                     <div class="card-footer text-right">
-                        <i class="icon ion-chatbubbles positive"></i> 6
-                        <i class="icon ion-heart assertive"></i> 23
+                        <!-- <i class="icon ion-chatbubbles positive"></i> 6
+                        <i class="icon ion-heart assertive"></i> 23 -->
                         <div class="pull-left">
-                            <i class="icon ion-clock"></i> just now
+                            कुल भाग: {{cat.post_count}}
                         </div>
 
                     </div>

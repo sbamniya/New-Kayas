@@ -3,7 +3,7 @@
         <div class="alert alert-danger" ng-show="noPost">No Post Availible for Selected Category</div>
         <div class="list">
             <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.id}}', catID: '{{catID}}'})" class="card card-gallery item item-text-wrap"  >
-                <div class="ink dark-bg">
+                <div class="ink red-bg">
                     <h2 ng-bind-html="post.title"></h2>
                     <h2 style="padding-top: 0 ">By : {{post.author.name}}<div class="pull-right">Published: {{post.date | date: 'MMM dd, yyyy'}}</div></h2>
                     <img class="full-image" ng-src="{{post.attachments[0].url}}">
