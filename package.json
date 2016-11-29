@@ -1,7 +1,7 @@
 {
   "name": "newkayass",
   "version": "1.1.1",
-  "description": "newKayass: An Ionic project",
+  "description": "Kayass: A thought by Kalika Prasad",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
