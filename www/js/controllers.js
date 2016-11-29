@@ -202,7 +202,7 @@ angular.module('starter.controllers', [])
         if (response.status=='ok') {
             $scope.posts = response.posts;
             $scope.cat = response.category;
-            console.log($scope.posts);
+            //console.log($scope.posts);
         }else{
             alert('Error');
         }
