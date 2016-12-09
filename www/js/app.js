@@ -129,7 +129,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
             }
         }
     })
-    
+    .state('app.home', {
+        url: '/home',
+        views: {
+            'menuContent': {
+                templateUrl: 'templates/home.html',
+                controller: 'HomeCtrl'
+            },
+        }
+    })
     .state('app.author', {
         url: '/author',
         views: {
@@ -141,5 +149,5 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
     });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/app/activity');
+    $urlRouterProvider.otherwise('/app/home');
 });

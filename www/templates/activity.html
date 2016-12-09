@@ -1,5 +1,4 @@
 <ion-view view-title="Categories">
-
     <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
         <div class="item card-item" ng-repeat="cat in categories | orderBy: '-id'">
             <div ui-sref="app.gallery({catID: '{{cat.id}}'})" class="card stable-bg ink ink-dark">
@@ -16,8 +15,12 @@
                     </div>
                 </div>
             </div>
-
         </div>
-        <ion-spinner icon="android" ng-show="loading"></ion-spinner>
+        <div class="ion-spinner"  ng-show="loading">
+          <div class="ion-spinner-container">
+            <ion-spinner icon="android"></ion-spinner>
+            <h4 class="wait-text">Please Wait...</h4>
+          </div>
+        </div>
     </ion-content>
 </ion-view>

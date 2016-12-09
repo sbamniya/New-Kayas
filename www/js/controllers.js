@@ -152,6 +152,18 @@ angular.module('starter.controllers', [])
     $scope.$parent.setHeaderFab(false);
     $scope.loading = true;
     $scope.noPost = false;
+
+    $scope.commentData = {};
+    var user = window.localStorage.getItem('userDetails');
+    
+    if (!angular.isUndefined(user) && user!=null && user!='') {
+        var userDetails = JSON.parse(user);
+        $scope.commentData.email = userDetails.email;
+        $scope.commentData.name = userDetails.name;
+        if (!angular.isUndefined(userDetails.url)) {
+            $scope.commentData.url = userDetails.url;
+        }
+    }
     // Set Motion
     $timeout(function() {
         ionicMaterialMotion.slideUp({
@@ -181,6 +193,11 @@ angular.module('starter.controllers', [])
     });
     // Set Ink
     ionicMaterialInk.displayEffect();
+
+    $scope.addComment = function(){
+        console.log($scope.commentData);
+        window.localStorage.setItem('userDetails', JSON.stringify($scope.commentData));
+    }
 })
 
 .controller('GalleryCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http) {
@@ -191,8 +208,6 @@ angular.module('starter.controllers', [])
     $scope.$parent.setHeaderFab(false);
     $scope.loading = true;
     $scope.noPost = false;
-    // Activate ink for controller
-    ionicMaterialInk.displayEffect();
 
     var id = $stateParams.catID;
     $scope.catID = id;
@@ -242,4 +257,28 @@ angular.module('starter.controllers', [])
     $scope.loading = false;
 })
 
+.controller('HomeCtrl', ['$scope', '$stateParams', '$timeout', 'ionicMaterialInk', 'ionicMaterialMotion', '$http','$ionicSlideBoxDelegate', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http, $ionicSlideBoxDelegate){
+        $scope.interVal = 2000;
+        $scope.loading = true;
+        $http.get('http://kayass.com/?json=core.get_category_posts&id=19').success(function(response){
+            
+            if (response.status=='ok') {
+                var posts = response.posts;
+                var temp = [];
+                angular.forEach(posts, function(item, key){
+                    item.date = new Date(item.date);
+                    item.catID = item.categories[0].id;
+                    temp.push(item);
+                });
+                $scope.posts = temp;
+                $scope.slides = temp;
+                $ionicSlideBoxDelegate.update();
+                $ionicSlideBoxDelegate.loop(true);
+                //console.log(response.posts)
+                $scope.loading = false;
+            }else{
+                alert('Error');
+            }
+        });
+}])
 ;
