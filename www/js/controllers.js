@@ -87,7 +87,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk) {
+.controller('LoginCtrl', function($scope, $timeout, $stateParams, ionicMaterialInk, ApiURL) {
     $scope.$parent.clearFabs();
     $timeout(function() {
         $scope.$parent.hideHeader();
@@ -95,7 +95,7 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 })
 
-.controller('FriendsCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion) {
+.controller('FriendsCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, ApiURL) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -114,7 +114,7 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 })
 
-.controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http) {
+.controller('ActivityCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, ApiURL) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = false;
@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 })
 
-.controller('ProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http) {
+.controller('ProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, ApiURL) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -200,7 +200,7 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('GalleryCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http) {
+.controller('GalleryCtrl', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http, ApiURL) {
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
     $scope.isExpanded = false;
@@ -238,7 +238,7 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect ();
 })
 
-.controller('author',function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http){
+.controller('author',function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http, ApiURL){
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -257,11 +257,12 @@ angular.module('starter.controllers', [])
     $scope.loading = false;
 })
 
-.controller('HomeCtrl', ['$scope', '$stateParams', '$timeout', 'ionicMaterialInk', 'ionicMaterialMotion', '$http','$ionicSlideBoxDelegate', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http, $ionicSlideBoxDelegate){
+.controller('HomeCtrl', ['$scope', '$stateParams', '$timeout', 'ionicMaterialInk', 'ionicMaterialMotion', '$http','$ionicSlideBoxDelegate','ApiURL', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http, $ionicSlideBoxDelegate, ApiURL){
         $scope.interVal = 2000;
         $scope.loading = true;
-        $http.get('http://kayass.com/?json=core.get_category_posts&id=19').success(function(response){
-            
+        var api = ApiURL+'request.php?method=allpost&pagination=1'
+        $http.get(api).success(function(response){
+            console.log(response);
             if (response.status=='ok') {
                 var posts = response.posts;
                 var temp = [];

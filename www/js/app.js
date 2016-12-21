@@ -20,15 +20,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-material', 'io
     });
 })
 
+.value('ApiURL', 'http://deltabee.com/devkayass/API/')
+
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     // Turn off caching for demo simplicity's sake
     $ionicConfigProvider.views.maxCache(0);
+    
 
-    /*
-    // Turn off back button text
+
     $ionicConfigProvider.backButton.previousTitleText(false);
-    */
+    
 
     $stateProvider.state('app', {
         url: '/app',
