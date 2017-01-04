@@ -4,14 +4,14 @@
         <ion-slide-box does-continue="true" show-pager="false" auto-play="true" slide-interval="3000" on-slide-changed="slideHasChanged($index)">
           <ion-slide  ng-repeat="slide in slides" ui-sref="app.profile({postId:'{{slide.id}}', catID: '{{slide.catID}}'})">
             <div class="box">
-                <img ng-src="{{slide.attachments[0].url}}" height="200px" width="100%">
+                <img ng-src="{{slide.thumbnail_url}}" height="200px" width="100%">
                 <!-- <h4 class="post-title">Featured Stories</h4> -->
                 <div class="tabs tabs-dark tabs-icon-top static red-bg">
                     <a href="javascript:void(0)" class="tab-item">
-                        <i class="icon ion-chatbubbles"></i> {{slide.comment_count}}
+                        <i class="icon ion-chatbubbles"></i> {{slide.comments}}
                     </a>
                     <a href="javascript:void(0)" class="tab-item">
-                        <i class="icon ion-heart"></i> 10
+                        <i class="icon ion-heart"></i> {{slide.ul_value}}
                     </a>
                 </div>
             </div>
@@ -19,11 +19,11 @@
         </ion-slide-box>
         <h3 class="content padding double-padding-x">Recent Stories</h3>
         <div class="list">
-            <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.id}}', catID: '{{post.catID}}'})" class="card card-gallery item item-text-wrap"  >
+            <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.ID}}', catID: '{{post.catID}}'})" class="card card-gallery item item-text-wrap"  >
                 <div class="ink red-bg">
                     <h2 ng-bind-html="post.title"></h2>
-                    <h2 style="padding-top: 0 ">By : {{post.author.name}}<div class="pull-right">Published: {{post.date | date: 'MMM dd, yyyy'}}</div></h2>
-                    <img class="full-image" ng-src="{{post.attachments[0].url}}">
+                    <h2 style="padding-top: 0 ">By : {{post.post_author}}<div class="pull-right">Published: {{post.post_modified | date: 'MMM dd, yyyy'}}</div></h2>
+                    <img class="full-image" ng-src="{{post.thumbnail_url}}" width="100%">
                 </div>
                 <div class="content padding double-padding-x">
                     <p ng-bind-html="post.excerpt"></p>
@@ -31,7 +31,7 @@
                 <div class="item tabs tabs-secondary tabs-icon-left">
                     <a class="tab-item stable-bg assertive">
                         <i class="icon ion-heart"></i>
-                        4
+                        {{post.ul_value}}
                     </a>
                     <a class="tab-item stable-bg positive-900">
                         <i class="icon ion-chatbubbles"></i>

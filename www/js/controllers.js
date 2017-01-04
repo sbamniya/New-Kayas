@@ -124,10 +124,10 @@ angular.module('starter.controllers', [])
     // Activate ink for controller
     
     $scope.categories = [];
-    $http.get('http://deltabee.com/kayas/?json=core.get_category_index').success(function(response){
-        // / console.log(response.categories);
-        if (response.status=='ok') {
-            $scope.categories = response.categories;
+    $http.get(ApiURL+'/request.php?method=get_categories_id').success(function(response){
+        //console.log(response.categories);
+        if (response.status==200) {
+            $scope.categories = response.data.posts;
               $timeout(function() {
                 ionicMaterialMotion.fadeSlideIn({
                     selector: '.item'
@@ -143,7 +143,7 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 })
 
-.controller('ProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, ApiURL) {
+.controller('ProfileCtrl', function($scope, $stateParams, $timeout, ionicMaterialMotion, ionicMaterialInk, $http, ApiURL, $state) {
     // Set Header
     $scope.$parent.showHeader();
     $scope.$parent.clearFabs();
@@ -173,18 +173,18 @@ angular.module('starter.controllers', [])
 
     var postId = $stateParams.postId;
     var catID = $stateParams.catID;
-    $http.get('http://kayass.com/?json=core.get_category_posts&id='+catID).success(function(response){
-        if (response.status=='ok') {
-            $scope.posts = response.posts;
-            angular.forEach($scope.posts, function(value, key){
-                if (value.id==postId) {
-                    $scope.post = value;
-                    $scope.post.date = new Date(value.date);
-                    if (value.comment_count==0) {
-                        $scope.noPost = true;
-                    }
-                }
-            });
+    $http.get(ApiURL+'request.php?method=post_detail&post_id='+postId).success(function(response){
+        if (response.status==200) {
+            $scope.posts = response.data.posts;
+            // angular.forEach($scope.posts, function(value, key){
+            //     if (value.post_id==postId) {
+            //         $scope.post = value;
+            //         $scope.post.date = new Date(value.date);
+            //         if (value.comment_count==0) {
+            //             $scope.noPost = true;
+            //         }
+            //     }
+            // });
             $scope.loading = false;
             //console.log($scope.post);
         }else{
@@ -197,6 +197,12 @@ angular.module('starter.controllers', [])
     $scope.addComment = function(){
         console.log($scope.commentData);
         window.localStorage.setItem('userDetails', JSON.stringify($scope.commentData));
+
+        $http.get(ApiURL+'request.php?method=addcomment&id='+postId+'&author='+ $scope.commentData.name + '&email=' + $scope.commentData.email + '&content=' + $scope.commentData.content + '&url=' + $scope.commentData.url).success(function(response){
+            if (response.status==200) {
+                $state.reload();
+            }
+        });
     }
 })
 
@@ -211,11 +217,11 @@ angular.module('starter.controllers', [])
 
     var id = $stateParams.catID;
     $scope.catID = id;
-    $http.get('http://kayass.com/?json=core.get_category_posts&id='+id).success(function(response){
-        if (response.status=='ok') {
+    $http.get(ApiURL+'request.php?method=category_post&cat_id='+id+'&pagination=3').success(function(response){
+        if (response.status==200) {
             var log = [];
-            var res = response.posts;
-            $scope.cat = response.category;
+            var res = response.data.posts;
+            $scope.cat = response.data.posts;
             angular.forEach(res, function(item, key){
                 var date = new Date(item.date);
                 item.date = date.getTime();
@@ -260,18 +266,18 @@ angular.module('starter.controllers', [])
 .controller('HomeCtrl', ['$scope', '$stateParams', '$timeout', 'ionicMaterialInk', 'ionicMaterialMotion', '$http','$ionicSlideBoxDelegate','ApiURL', function($scope, $stateParams, $timeout, ionicMaterialInk, ionicMaterialMotion, $http, $ionicSlideBoxDelegate, ApiURL){
         $scope.interVal = 2000;
         $scope.loading = true;
-        var api = ApiURL+'request.php?method=allpost&pagination=1'
+        var api = ApiURL+'request.php?method=featuredpost'
         $http.get(api).success(function(response){
-            console.log(response);
-            if (response.status=='ok') {
-                var posts = response.posts;
+            //console.log(response.data.posts);
+            if (response.status==200) {
+                var posts = response.data.posts;
                 var temp = [];
                 angular.forEach(posts, function(item, key){
-                    item.date = new Date(item.date);
-                    item.catID = item.categories[0].id;
+                    //item.date = new Date(item.date);
+                    //item.catID = item.categories[0].id;
                     temp.push(item);
                 });
-                $scope.posts = temp;
+                //$scope.posts = temp;
                 $scope.slides = temp;
                 $ionicSlideBoxDelegate.update();
                 $ionicSlideBoxDelegate.loop(true);
@@ -280,6 +286,24 @@ angular.module('starter.controllers', [])
             }else{
                 alert('Error');
             }
+        });
+        var api = ApiURL+'request.php?method=recentpost'
+        $http.get(api).success(function(response){
+            //console.log(response.data.posts);
+            
+                var posts = response;
+                var temps = [];
+                angular.forEach(posts, function(item, key){
+                    //item.date = new Date(item.date);
+                    //item.catID = item.categories[0].id;
+                    temps.push(item);
+                });
+                $scope.posts = temps;
+                //$scope.slides = temp;
+                $ionicSlideBoxDelegate.update();
+                $ionicSlideBoxDelegate.loop(true);
+                //console.log(response.posts)
+                $scope.loading = false;
         });
 }])
 ;

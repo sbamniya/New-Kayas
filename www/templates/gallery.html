@@ -2,11 +2,11 @@
     <ion-content ng-class="{expanded:isExpanded}" class="animate-fade-slide-in">
         <div class="alert alert-danger" ng-show="noPost">No Post Availible for Selected Category</div>
         <div class="list">
-            <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.id}}', catID: '{{catID}}'})" class="card card-gallery item item-text-wrap"  >
+            <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.post_id}}', catID: '{{catID}}'})" class="card card-gallery item item-text-wrap"  >
                 <div class="ink red-bg">
                     <h2 ng-bind-html="post.title"></h2>
-                    <h2 style="padding-top: 0 ">By : {{post.author.name}}<div class="pull-right">Published: {{post.date | date: 'MMM dd, yyyy'}}</div></h2>
-                    <img class="full-image" ng-src="{{post.attachments[0].url}}">
+                    <h2 style="padding-top: 0 ">By : {{post.post_author}}<div class="pull-right">Published: {{post.post_date | date: 'MMM dd, yyyy'}}</div></h2>
+                    <img class="full-image" ng-src="{{post.thumbnail_url}}">
                 </div>
                 <div class="content padding double-padding-x">
                     <p ng-bind-html="post.excerpt"></p>
@@ -14,11 +14,11 @@
                 <div class="item tabs tabs-secondary tabs-icon-left">
                     <a class="tab-item stable-bg assertive">
                         <i class="icon ion-heart"></i>
-                        4
+                        {{post.post_like}}
                     </a>
                     <a class="tab-item stable-bg positive-900">
                         <i class="icon ion-chatbubbles"></i>
-                        {{post.comment_count}}
+                        {{post.post_comment}}
                     </a>
                 </div>
                 
