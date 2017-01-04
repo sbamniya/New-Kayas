@@ -124,7 +124,7 @@ angular.module('starter.controllers', [])
     // Activate ink for controller
     
     $scope.categories = [];
-    $http.get(ApiURL+'/request.php?method=get_categories_id').success(function(response){
+    $http.get(ApiURL+'request.php?method=get_categories_id').success(function(response){
         //console.log(response.categories);
         if (response.status==200) {
             $scope.categories = response.data.posts;
@@ -176,15 +176,7 @@ angular.module('starter.controllers', [])
     $http.get(ApiURL+'request.php?method=post_detail&post_id='+postId).success(function(response){
         if (response.status==200) {
             $scope.posts = response.data.posts;
-            // angular.forEach($scope.posts, function(value, key){
-            //     if (value.post_id==postId) {
-            //         $scope.post = value;
-            //         $scope.post.date = new Date(value.date);
-            //         if (value.comment_count==0) {
-            //             $scope.noPost = true;
-            //         }
-            //     }
-            // });
+            
             $scope.loading = false;
             //console.log($scope.post);
         }else{
@@ -195,12 +187,13 @@ angular.module('starter.controllers', [])
     ionicMaterialInk.displayEffect();
 
     $scope.addComment = function(){
-        console.log($scope.commentData);
+        $scope.loading = true;
         window.localStorage.setItem('userDetails', JSON.stringify($scope.commentData));
 
         $http.get(ApiURL+'request.php?method=addcomment&id='+postId+'&author='+ $scope.commentData.name + '&email=' + $scope.commentData.email + '&content=' + $scope.commentData.content + '&url=' + $scope.commentData.url).success(function(response){
             if (response.status==200) {
-                $state.reload();
+                $scope.loading = false;
+                alert('Your comment has been submitted successfully !');
             }
         });
     }
@@ -282,28 +275,33 @@ angular.module('starter.controllers', [])
                 $ionicSlideBoxDelegate.update();
                 $ionicSlideBoxDelegate.loop(true);
                 //console.log(response.posts)
-                $scope.loading = false;
+                var api = ApiURL+'request.php?method=recentpost'
+                $http.get(api).success(function(response){
+                    //console.log(response.data.posts);
+                    
+                        var posts = response;
+                        var temps = [];
+                        angular.forEach(posts, function(item, key){
+                            //item.date = new Date(item.date);
+                            //item.catID = item.categories[0].id;
+                            temps.push(item);
+                        });
+                        $scope.posts = temps;
+                        //$scope.slides = temp;
+                        $ionicSlideBoxDelegate.update();
+                        $ionicSlideBoxDelegate.loop(true);
+                        //console.log(response.posts)
+                        $timeout(function() {
+                            ionicMaterialMotion.fadeSlideIn({
+                                selector: '.item'
+                            });
+                            $scope.loading = false;
+                        }, 1000);
+                });
             }else{
                 alert('Error');
             }
         });
-        var api = ApiURL+'request.php?method=recentpost'
-        $http.get(api).success(function(response){
-            //console.log(response.data.posts);
-            
-                var posts = response;
-                var temps = [];
-                angular.forEach(posts, function(item, key){
-                    //item.date = new Date(item.date);
-                    //item.catID = item.categories[0].id;
-                    temps.push(item);
-                });
-                $scope.posts = temps;
-                //$scope.slides = temp;
-                $ionicSlideBoxDelegate.update();
-                $ionicSlideBoxDelegate.loop(true);
-                //console.log(response.posts)
-                $scope.loading = false;
-        });
+        
 }])
 ;

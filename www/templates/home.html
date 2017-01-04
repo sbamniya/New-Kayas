@@ -18,7 +18,7 @@
           </ion-slide>
         </ion-slide-box>
         <h3 class="content padding double-padding-x">Recent Stories</h3>
-        <div class="list">
+        <div class="list animate-fade-slide-in">
             <div ng-repeat="post in posts | orderBy: '-id'" ui-sref="app.profile({postId:'{{post.ID}}', catID: '{{post.catID}}'})" class="card card-gallery item item-text-wrap"  >
                 <div class="ink red-bg">
                     <h2 ng-bind-html="post.title"></h2>

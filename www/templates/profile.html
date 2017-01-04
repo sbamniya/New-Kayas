@@ -16,7 +16,7 @@
                 <i class="icon ion-heart"></i> {{posts.post_like}}
             </a>
         </div>
-        <h4 class="content padding double-padding-x" ng-bind-html="post.title"></h4>
+        <h4 class="content padding double-padding-x" ng-bind-html="posts.post_title"></h4>
         <h4 class="content padding double-padding-x">Published On: {{posts.post_date | date: 'MMM dd, yyyy'}}</h4>
         <p class="content padding double-padding-x" style="text-align: justify;" ng-bind-html="posts.post_content"></p>
 
